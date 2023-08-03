@@ -1,9 +1,9 @@
 const express = require('express');
-const router = require('./routes');
+const routes = require('./routes/index');
 
 const app = express();
 app.use(express.json());
-app.use(router);
+app.use(routes);
 
 const HTTP_OK_STATUS = 200;
 const PORT = process.env.PORT || '3001';
