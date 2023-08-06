@@ -35,5 +35,5 @@ serverTalker.get('/:id', async (req, res) => {
   }
   res.status(200).json(talkerById);
 });
-
+// reenviando
 module.exports = serverTalker;
