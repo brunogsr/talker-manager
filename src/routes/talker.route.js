@@ -25,7 +25,7 @@ serverTalker.get('/', async (_req, res) => {
 serverTalker.get('/:id', async (req, res) => {
   const responseTalkers = await getTalkersData();
   const { id } = req.params;
-  console.log('Requested ID:', id);
+  // console.log('Requested ID:', id);
   const talkerById = responseTalkers.find((talker) => talker.id === Number(id));
   if (!talkerById) {
     return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
