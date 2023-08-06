@@ -1,12 +1,13 @@
 const express = require('express');
-const routes = require('./routes/index');
+const routers = require('./routes/routers');
 
 const app = express();
 app.use(express.json());
-app.use(routes);
 
 const HTTP_OK_STATUS = 200;
 const PORT = process.env.PORT || '3001';
+
+app.use(routers);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
