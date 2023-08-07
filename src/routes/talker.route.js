@@ -105,9 +105,8 @@ function validateRate(req, res, next) {
   next();
 }
 
-serverTalker.post('/', 
-validateToken,
- validateName, validateAge, validateTalk, validateRate,
+serverTalker.post('/', validateToken, validateName, validateAge,
+ validateTalk, validateRate,
  async (req, res) => {
   const responseTalkers = await getTalkersData();
   const newTalkerId = responseTalkers.length + 1;
@@ -122,6 +121,25 @@ validateToken,
   // const responseTalkersJSON = JSON.stringify(responseTalkers);
   // await fs.writeFile(pathJoin, responseTalkersJSON);
   return res.status(201).json(newTalker);
+});
+
+serverTalker.put('/:id', validateToken, validateName, validateAge,
+  validateTalk, validateRate,
+  async (req, res) => {
+  const responseTalkers = await getTalkersData();
+  const { id } = req.params;
+  const talkerIndex = responseTalkers.findIndex((talker) => talker.id === Number(id));
+  if (talkerIndex === -1) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  const talker = req.body;
+  const newTalker = {
+    id: Number(id),
+    ...talker,
+  };
+  responseTalkers[talkerIndex] = newTalker;
+  await setTalker(responseTalkers);
+  return res.status(200).json(newTalker);
 });
 
 module.exports = serverTalker;
