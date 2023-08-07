@@ -151,7 +151,7 @@ serverTalker.delete('/:id', validateToken, async (req, res) => {
   }
   responseTalkers.splice(talkerIndex, 1);
   await setTalker(responseTalkers);
-  return res.status(204).json({ message: 'Pessoa palestrante deletada com sucesso' });
+  return res.status(204).json({ });
 });
 
 module.exports = serverTalker;
