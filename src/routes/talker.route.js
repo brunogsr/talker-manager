@@ -6,12 +6,9 @@ const path = require('path');
 
 const pathJoin = path.join(__dirname, '..', 'talker.json');
 
-function getTalkersData() {
-  return fs.readFile(pathJoin, 'utf-8')
-    .then((data) => JSON.parse(data))
-    .catch((err) => {
-      console.error(err);
-    });
+async function getTalkersData() {
+  const talkers = await fs.readFile(pathJoin, 'utf-8');
+  return JSON.parse(talkers);
 }
 
 serverTalker.get('/', async (_req, res) => {
@@ -110,7 +107,10 @@ validateToken,
     id: newTalkerId,
     ...talker,
   };
+  // responseTalkers.readFile(pathJoin, 'utf-8');
   responseTalkers.push(newTalker);
+  // const responseTalkersJSON = JSON.stringify(responseTalkers);
+  // await fs.writeFile(pathJoin, responseTalkersJSON);
   res.status(201).json(responseTalkers);
 });
 
