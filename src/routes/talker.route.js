@@ -14,9 +14,9 @@ async function getTalkersData() {
 serverTalker.get('/', async (_req, res) => {
     const responseTalkers = await getTalkersData();
     if (!responseTalkers || responseTalkers.length === 0) {
-      res.status(200).json([]);
+      return res.status(200).json([]);
     }
-    res.status(200).json(responseTalkers);
+    return res.status(200).json(responseTalkers);
 });
 
 serverTalker.get('/:id', async (req, res) => {
@@ -116,7 +116,7 @@ validateToken,
   responseTalkers.push(newTalker);
   // const responseTalkersJSON = JSON.stringify(responseTalkers);
   // await fs.writeFile(pathJoin, responseTalkersJSON);
-  res.status(201).json(responseTalkers);
+  return res.status(201).json(responseTalkers);
 });
 
 module.exports = serverTalker;
