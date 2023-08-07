@@ -142,4 +142,16 @@ serverTalker.put('/:id', validateToken, validateName, validateAge,
   return res.status(200).json(newTalker);
 });
 
+serverTalker.delete('/:id', validateToken, async (req, res) => {
+  const responseTalkers = await getTalkersData();
+  const { id } = req.params;
+  const talkerIndex = responseTalkers.findIndex((talker) => talker.id === Number(id));
+  if (talkerIndex === -1) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  responseTalkers.splice(talkerIndex, 1);
+  await setTalker(responseTalkers);
+  return res.status(204).json({ message: 'Pessoa palestrante deletada com sucesso' });
+});
+
 module.exports = serverTalker;
