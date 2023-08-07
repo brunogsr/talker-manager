@@ -11,6 +11,10 @@ async function getTalkersData() {
   return JSON.parse(talkers);
 }
 
+async function setTalker(talker) {
+  await fs.writeFile(pathJoin, JSON.stringify(talker));
+}
+
 serverTalker.get('/', async (_req, res) => {
     const responseTalkers = await getTalkersData();
     if (!responseTalkers || responseTalkers.length === 0) {
@@ -27,7 +31,7 @@ serverTalker.get('/:id', async (req, res) => {
   if (!talkerById) {
     return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
-  res.status(200).json(talkerById);
+  return res.status(200).json(talkerById);
 });
 
 function validateToken(req, res, next) {
@@ -114,9 +118,10 @@ validateToken,
   };
   // responseTalkers.readFile(pathJoin, 'utf-8');
   responseTalkers.push(newTalker);
+  await setTalker(responseTalkers);
   // const responseTalkersJSON = JSON.stringify(responseTalkers);
   // await fs.writeFile(pathJoin, responseTalkersJSON);
-  return res.status(201).json(responseTalkers);
+  return res.status(201).json(newTalker);
 });
 
 module.exports = serverTalker;
