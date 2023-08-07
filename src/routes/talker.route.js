@@ -4,7 +4,7 @@ const fs = require('fs').promises; // corrigindo para módulo fs, conforme o REA
 const serverTalker = express.Router();
 const path = require('path');
 
-const pathJoin = path.join(__dirname, '..', 'talker.json');
+const pathJoin = path.join(__dirname, '../talker.json');
 
 async function getTalkersData() {
   const talkers = await fs.readFile(pathJoin, 'utf-8');
